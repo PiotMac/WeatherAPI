@@ -92,4 +92,12 @@ Below are examples of how to interact with the API using a standard web browser 
 #### Scenario 3: No parameter provided
 ![No parameter test execution](doc/Task3/parameter.png)
 
+## TASK 4: Design Reflection
+
+**Current Design:**
+The current architecture strongly supports the addition of new weather providers due to the strict Separation of Concerns (Clean Architecture). By isolating the external HTTP communication within the `weather_api` module, the core business logic and the Lambda orchestrator remain completely agnostic to the data source. To add a new provider (e.g., AccuWeather), we would only need to create a new class or function that returns the temperature in the expected format, leaving the rest of the application untouched. The only current limitation is that the orchestrator is statically tied to the Open-Meteo implementation, meaning a code change is still required to swap them.
+
+**Future Improvements:**
+Given more time, I would improve the system by fully implementing the **Strategy Design Pattern** combined with Environment Variables, allowing the application to dynamically switch between weather providers without modifying the code (e.g., acting as a fallback if the primary API fails). Additionally, to improve performance and reduce external API rate limits, I would introduce a **Caching Layer** (e.g., using AWS DynamoDB or ElastiCache) to store temperature data for a specific city with a short TTL (Time-To-Live). Finally, I would transition from manual console deployments to **Infrastructure as Code (IaC)** using AWS SAM or Terraform.
+
 
